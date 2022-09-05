@@ -1,0 +1,26 @@
+.user-form {
+    width: 30rem;
+    max-width: 90%;
+    margin: 10px auto;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+    padding: 2rem;
+    border-radius: 2%;
+}
+
+.user-item {
+    width: 15rem;
+    max-width: 95%;
+    margin: 1rem;
+}
+
+.user__screen_name {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.user__name {
+    text-align: center;
+    color: #4d4d4d;
+    margin-bottom: 0.5rem;
+}

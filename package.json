@@ -1,0 +1,34 @@
+{
+  "name": "radio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "twitter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "spotifyCLI": "node src/spotifyCLI.js",
+    "twitterCLI": "node src/twitterCLI.js",
+    "play": "nodemon main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.14.0",
+    "mariadb": "^2.5.5",
+    "onoff": "^6.0.3",
+    "readline-sync": "^1.4.10",
+    "request": "^2.88.2",
+    "sequelize": "*",
+    "spotify-web-api-node": "^5.0.2",
+    "troubadour": "github:Aea9/troubadour",
+    "twitter-api-v2": "^1.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,122 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/userTwitter.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <%- include('includes/navigation.ejs') %>
+    <main>
+    <h1>Noticias</h1>
+    <div>
+      <div>
+          <% if(errorMessage) { %>
+            <div class="error-message"><%= errorMessage %></div>
+            <% } %> 
+            <form class="user-form" action="/twitter/setNewsFrecuency %>" method="POST">
+                <span class="title">Configuración</span>
+            <div class="form-control">
+                <label for="news_frecuency">Frecuencia de noticias (min)</label>
+                <input class="<%= validationErrors.find(e => e.param === 'news_frecuency') ? 'invalid' : '' %>" type="number" min="15" max="90" step="5"
+                    name="news_frecuency" id="news_frecuency" value="<%= newsFrecuency %>">
+            </div>
+    
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Guardar</button>
+            <span class="info"><i class="material-icons fa-2xs">info</i> Para que los cambios sean efectivos se debe parar y reanudar la reproducción. </span>
+        </form>
+
+        <form class="user-form" action="/twitter/setConfig %>" method="POST">
+            <span class="title">Twitter config.</span>
+            <div class="form-control">
+                <label for="max_news"> Max Noticias</label>
+                <input class="<%= validationErrors.find(e => e.param === 'max_news') ? 'invalid' : '' %>" type="number" min="5" max="10"
+                    name="max_news" id="max_news" value="<%= twitterConfig.maxNews %>">
+            </div>
+    
+            <div class="form-control" hidden>
+                <label for="max_time"> Max time (hours) DESACTIVADO</label>
+                <input class="<%= validationErrors.find(e => e.param === 'max_time') ? 'invalid' : '' %>" type="number" min="1" max="24"
+                    name="max_time" id="max_time" value="<%= twitterConfig.maxTime %>">
+            </div>
+    
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Guardar</button>
+            <span class="info"><i class="material-icons fa-2xs">info</i> Número máximo de noticias de cada usuario que se mostrará en cada noticiario. </span>
+        </form>
+
+       <h2>Siguiendo</h2>
+
+    <form class="user-form" action="/twitter/addUser %>" method="POST">
+     
+        <span class="title">Añadir usuario</span>
+                <div class="form-control">
+                    <label for="screen_name">Usuario</label>
+                    <input 
+                    class="<%= validationErrors.find(e => e.param === 'screen_name') ? 'invalid' : '' %> "
+                    type="text" 
+                    name="screen_name" 
+                    id="screen_name"
+                    minlength="1"
+                    maxlength="15"
+                    value="<%= oldInput.screen_name%>">
+                </div>
+                
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn" type="submit">Añadir</button>
+    </form>
+
+       <% if (users.length > 0) { %>
+        <div class="grid">
+            <% for (let user of users) { %>
+                <article class="card user-item">
+                    <header class="card__header">
+                        <h1 class="user__name">
+                            <%= user.name %>
+                        </h1>
+                    </header>
+
+                    <div class="card__image">
+                        <img src="<%= user.profile_image_url %>"
+                            alt="<%= user.screen_name %>">
+                    </div>
+
+                    <div class="card__content">
+                        <h2 class="user__screen_name">@
+                            <%= user.screen_name %>
+                        </h2>
+
+                    </div>
+                    <div class="card__actions">
+                        <form action="/twitter/deleteUser" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" value="<%= user.screen_name %>" name="screen_name">
+                            <button class="btn danger" type="submit">Eliminar</button>
+                        </form>
+                    </div>
+
+                </article>
+                <% } %>
+        </div>
+        
+        <% } else { %>
+            <h2>No Users Added!</h2>
+        <% } %>
+            
+        <div hidden>
+        
+            <form class="user-form" action="/twitter/getTweets %>" method="GET">
+                <span class="title">Get news</span>
+        
+                <div class="form-control">
+                    <label for="tweets">Tweets</label>
+                    <textarea type="textarea" name="tweets" id="tweets"><%= tweets ? tweets : '' %></textarea>
+                </div>
+        
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn" type="submit">Get tweets</button>
+            </form>
+        </div>
+      </div>
+    </main>
+<%- include('includes/end.ejs') %>

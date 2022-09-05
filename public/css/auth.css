@@ -1,0 +1,9 @@
+.login-form {
+  width: 30rem;
+  max-width: 90%;
+  margin: 10px auto;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+  padding: 2rem;
+  border-radius: 2%;
+}

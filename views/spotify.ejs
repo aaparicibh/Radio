@@ -1,0 +1,101 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/spotify.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+    <%- include('includes/navigation.ejs') %>
+    <main>
+    <h1>Música</h1>
+    <% if(!logged){ %>
+        <a href="/spotify/login" class="btn btn-primary">Iniciar sesión con Spotify</a>
+    <% } else { %>
+        <a href="/spotify/logout" class="btn danger btn-primary">Cerrar sesión</a>
+    <% } %>
+        
+     
+   </div>
+
+    <% if(errorMessage) { %>
+        <div class="error-message"><%= errorMessage %></div>
+    <% } %> 
+   <p hidden>logged: <%= logged %></p>
+
+   <% if(logged){ %>
+    
+    <p hidden>Device: <%= (spotifyConfig.deviceId ? spotifyConfig.deviceId : "Not set") %></p>
+    <p hidden>token <%= (spotifyConfig.accessToken ? spotifyConfig.accessToken : "Not set") %></p>
+    <p hidden>refresh token <%= (spotifyConfig.accessToken ? spotifyConfig.refreshToken: "Not set") %></p>
+    <form class="spotify-form" action="/spotify/setPlaylist %>" method="POST">
+        <span class="title">Lista de reproducción</span>
+        <div class="form-control">
+            <h1 class="playlist__name">
+                <%= (spotifyConfig.playlist ? spotifyConfig.playlist.name : "Not set") %>
+            </h1>
+        </div>
+        <div class="form-control">
+            <div class="card__image">
+                <img src="<%= spotifyConfig.playlist ? spotifyConfig.playlist.imageURL : '' %>"
+                    alt="<%= spotifyConfig.playlist ? spotifyConfig.playlist.imageURL : '' %> playlist image">
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="playlist"> Lista de reproducción (URL)</label>
+            <input class="" type="text"
+                name="playlist" id="playlist"
+                placeholder="https://open.spotify.com/playlist/37i9dQZF1DZ06evO390c2A?si=15cb3dd2bfd743d6"
+                value="">
+            <span class="info"><i class="material-icons fa-2xs">info</i> Copia la URL de la playlist desde la app de Spotify. (Para que los cambios sean efectivos se debe parar y reanudar la música.)</span>
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn" type="submit">Guardar</button>
+    </form>
+
+
+    <form class="spotify-form" action="/spotify/playerSetDev %>" method="POST">
+        <div class="form-control">
+            <span class="title">Cliente</span>
+            <label for="device"> Nombre del dispositivo</label>
+            <input class="" type="text"
+                name="device" id="device"
+                value="<%= spotifyConfig.device.name %>">
+            <span class="info"><i class="material-icons fa-2xs">info</i> Nombre del cliente de Spotify</span>
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn" type="submit">Guardar</button>
+    </form>
+
+    <form class="spotify-form" action="/spotify/setActiveSrc %>" method="POST">
+        <div class="form-control">
+            <span class="title">Fuente de música activa</span>
+            <label for="active"> Nombre de la fuente</label>
+            <div class="radio-item">
+                <input class="" type="radio"
+                    name="source" id="spotify" value = "Spotify" <%= (activeSrc == "Spotify" ? "checked": " ") %> > 
+                <label for="spotify">Spotify</label>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn" type="submit">Guardar</button>
+    </form>
+
+    <div hidden>
+        <div class="spotify-form" hidden>
+            <span class="title">Player</span>
+            <div class="form-control" >
+                <div class="controls">
+                        <a href="/spotify/playerPrevious"><i class="material-icons">skip_previous</i></a>
+                        <a href="/spotify/playerPause"><i class="material-icons">pause</i></a>
+                        <a href="/spotify/playerPlay"><i class="material-icons">play_arrow</i></a>
+                        <a href="/spotify/playerNext"><i class="material-icons">skip_next</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <% } %> 
+</div>
+
+</main>
+<%- include('includes/end.ejs') %>

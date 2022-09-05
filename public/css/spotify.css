@@ -1,0 +1,36 @@
+.spotify-form {
+    width: 30rem;
+    max-width: 90%;
+    margin: 10px auto;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+    padding: 2rem;
+    border-radius: 2%;
+}
+
+.playlist__name {
+    text-align: center;
+    color: #4d4d4d;
+    margin-bottom: 0.5rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.controls i{
+    color:rgb(64, 195, 103);
+}
+
+i{
+    font-size:90px;
+}
+
+.radio-item input{
+    max-width: 10%;
+    display: inline;
+}
+.radio-item label{
+    display: inline;
+}
